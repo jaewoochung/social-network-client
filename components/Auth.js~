@@ -1,0 +1,117 @@
+import React, { useState, useEffect } from 'react'
+import {
+  Container,
+  FormControl,
+  Button,
+  FormLabel,
+  Input,
+  NumberInputField,
+  NumberInput,
+  Box,
+  useToast
+} from '@chakra-ui/react'
+
+import userService from '../services/users'
+
+const Auth = () => {
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
+  const [verifyPassword, setVerifyPassword] = useState('')
+  const [name, setName] = useState('')
+  const [users, setUsers] = useState([])
+  const toast = useToast()
+
+  useEffect(() => {
+    userService.getAll()
+      .then(init => {
+        setUsers(init)
+      })
+  }, [])
+
+  const handleUserChange = (event) => {
+    setUser(event.target.value)
+  }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const handleVerifyChange = (event) => {
+    setVerifyPassword(event.target.value)
+  }
+
+  const handleNameChange = (event) => {
+    setName(event.target.value)
+  }
+
+  const createAccount = () => {
+
+    // verify passwords match
+    if (password !== verifyPassword) {
+      toast({
+        description: "passwords do not match! - please retry",
+        status: "error",
+        isClosable: true
+      })
+    } else {
+      const account = {
+        username: user,
+        name: name,
+        password: password,
+      }
+      
+      userService.create(account)
+
+      toast({
+        description: "Succesfully created account",
+        isClosable: true
+      })
+      
+      setPassword('')
+      setVerifyPassword('')
+      setUser('')
+      setName('')
+    }
+    
+  }
+
+  const Test = ({ u }) => {
+    return (
+      <div>
+        {u.name}
+      </div>
+    )
+  }
+  
+  return (
+    <Container>
+      <Box>
+        <FormControl id="signup" isRequired>
+
+          <FormLabel>Full Name</FormLabel>
+          <Input bgColor="white" type="text" onChange={handleNameChange} />
+          
+          <FormLabel>Username</FormLabel>
+          <Input bgColor="white" type="text" onChange={handleUserChange} />
+          
+          <FormLabel>Password</FormLabel>
+          <Input bgColor="white" type="password" onChange={handlePasswordChange} />
+
+          <FormLabel>Verify Password</FormLabel>
+          <Input bgColor="white" type="password" onChange={handleVerifyChange} />
+
+          <Button onClick={createAccount} mt={3} bgColor="#86da75" type="submit" >Create Account</Button>
+
+        </FormControl>
+        {users[1].username}
+        {users.map(u => {
+          <Test u={u} />
+        }
+        )}
+
+      </Box>
+    </Container>
+  )
+}
+
+export default Auth

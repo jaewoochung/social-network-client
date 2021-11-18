@@ -1,0 +1,25 @@
+import {
+  Flex
+} from '@chakra-ui/react'
+
+const NavbarContainer = ({ children, ...props }) => {
+  return (
+    <Flex
+      as="nav"
+      align="center"
+      justify="space-between"
+      wrap="wrap"
+      w='100%'
+      mb={8}
+      p={5}
+      bgGradient="linear(to-l, #c6c5e7, #e6e7c5)"
+
+      color={["black", "black", "primary.700", "primary.700"]}
+      {...props}
+    >
+      { children }
+    </Flex>
+  )
+}
+
+export default NavbarContainer

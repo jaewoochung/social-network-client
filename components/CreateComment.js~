@@ -1,0 +1,13 @@
+import React from 'react'
+import {
+  Container,
+  Textarea
+} from '@chakra-ui/react'
+
+const CreateComment = () => {
+  return (
+    
+  )
+}
+
+export default CreateComment

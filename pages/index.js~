@@ -1,0 +1,18 @@
+import {
+  Container,
+  Text
+} from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
+import Auth from '../components/Auth'
+import Home from '../components/Home'
+
+const Page = () => {
+
+  return (
+    <Container maxW="100%">
+      <Auth />
+    </Container>
+  )
+}
+
+export default Page

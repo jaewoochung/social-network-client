@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from 'react'
+import {
+  Container,
+  Box,
+  Text,
+  Heading,
+  Icon,
+  Flex,
+  Textarea,
+  Avatar,
+  Wrap
+} from '@chakra-ui/react'
+import { GoThumbsup } from 'react-icons/go'
+import Comment from './Comment'
+import CreateComment from './CreateComment'
+import postService from '../services/posts'
+
+const Post = ({ post, refreshComments }) => {
+  const [comments, setComments] = useState([])
+  
+  useEffect(() => {
+    postService
+      .getAll()
+      .then(init => {
+        setComments(post.comments)
+      })
+  }, [])
+
+  const addComment = (comment, user, commentObject) => {
+    postService
+      .createComment(post.id, commentObject)
+      .then(returnedComment => {
+        console.log(comments)
+        setComments(comments.concat({comment: comment, user: user}))
+        console.log(comments)
+      })
+  }
+
+  return (
+    <Box
+      shadow="md"
+      borderWidth="1px"
+      borderRadius="md"
+      p={5}
+      flex="1"
+      mb={10}
+      bgColor="#eaeaeb"
+    >
+      <Wrap mb={3}>
+        <Avatar name={post.user.username} />
+        <Text pl={3} fontWeight="bold">{post.user.name}</Text>
+      </Wrap>      
+      <Text>{post.content}</Text>
+      
+      <Box
+        pt={3}
+        borderWidth=""
+      >
+        <Flex>
+          <Icon as={GoThumbsup} />
+          <Text px={2}>{post.likes} likes</Text>
+        </Flex>
+      </Box>
+      
+      <Box pt={5} mx={5} shadow="md" >
+        {comments.map(comment =>
+          <Comment id={comment.id} comment={comment.comment} user={comment.user} />
+        )}
+      </Box>
+      <Box px={10} pt={5}>
+        <CreateComment post={post} addComment={addComment} />
+      </Box>
+    </Box>
+  )
+}
+
+export default Post

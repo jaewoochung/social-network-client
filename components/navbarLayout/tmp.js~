@@ -1,0 +1,19 @@
+import { React, useState } from 'react'
+
+import Logo from './logo'
+
+const Navbar = (props) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggle = () => setIsOpen(!isOpen)
+
+  return (
+    <NavbarContainer {...props}>
+      <Logo />
+      <MenuToggle toggle={toggle} isOpen={isOpen} />
+      <MenuLinks isOpen={isOpen} />
+    </NavbarContainer>
+  )
+}
+
+export default Navbar

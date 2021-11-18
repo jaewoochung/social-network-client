@@ -1,0 +1,37 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "next start",
+    "dev": "next dev -H 0.0.0.0",
+    "server": "json-server -p3001 --watch db.json"
+  },
+  "private": true,
+  "proxy": "http://0.0.0.0:3001",
+  "keywords": [],
+  "author": "jaewoo chung",
+  "license": "MIT",
+  "dependencies": {
+    "@chakra-ui/icons": "^1.0.17",
+    "@chakra-ui/react": "^1.6.12",
+    "@emotion/styled": "^11.3.0",
+    "@fontsource/inter": "^4.5.0",
+    "@fontsource/merriweather": "^4.5.1",
+    "@fontsource/roboto": "^4.5.1",
+    "axios": "^0.24.0",
+    "next": "^12.0.3",
+    "next-redux-wrapper": "^7.0.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "universal-cookie": "^4.0.4"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  }
+}
