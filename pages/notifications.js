@@ -11,7 +11,7 @@ import Index from './index'
 
 const cookies = new Cookies()
 
-import authToken = cookies.get('token')
+const authToken = cookies.get('token')
 
 const Notifications = () => {
   const [curUser, setCurUser] = useState([])  
