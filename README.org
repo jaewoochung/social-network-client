@@ -1,9 +1,5 @@
 * Social Network assignment
+  *social media application*
+  
 ** Create the UI components
 *** Sign in / Sign up page
-
-  | username | password |
-  | sanji    | cook     |
-  | ksmith   | awesome  |
-  | daren    | honey    |
-  |          |          |
