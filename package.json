@@ -6,7 +6,8 @@
   "scripts": {
     "start": "next start",
     "dev": "NODE_ENV='development' node server.js",
-    "server": "json-server -p3001 --watch db.json"
+    "server": "json-server -p3001 --watch db.json",
+    "build": "next build"
   },
   "private": true,
   "proxy": "http://localhost:3001",
