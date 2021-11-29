@@ -1,6 +1,7 @@
 import MenuItem from './menuItem'
 import {
-  Stack
+  Stack,
+  Box
 } from '@chakra-ui/react'
 
 const MenuLinks = ({ isOpen }) => {

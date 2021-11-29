@@ -1,0 +1,25 @@
+import React, { useEffect, useState} from 'react'
+import {
+  Text,
+  Button,
+  Avatar,
+  Wrap,
+  Flex
+} from '@chakra-ui/react'
+import userService from '../services/users'
+
+const FriendRequest = ({request}) => {
+  useEffect(() => {
+    userService.get()
+  }, [])
+  
+  return (
+    <Flex>
+      <Wrap>
+        <Avatar size="xs" name="tmp" />
+      </Wrap>
+    </Flex>
+  )
+}
+
+export default FriendRequest

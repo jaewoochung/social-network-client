@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/users'
+const baseUrl = '/api/users'
 
 let token = null
 
@@ -12,6 +12,24 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const getFriend = (id) => {
+  console.log("userservice ", id)
+  const request = axios.get(`${baseUrl}/requester/${id}`)
+  return request.then(response => response.data)
+}
+
+const getUser = async (cookieToken) => {
+  const config = {
+    headers: { Authorization: cookieToken },
+  }
+  
+  console.log("getUser service", cookieToken)
+  
+  const request = axios.get(`${baseUrl}/getUser`, config)
+  console.log("recieved request")
+  return request.then(response => response.data)
+}
+
 const create = async account => {
   const config = {
     headers: { Authorization: token },
@@ -21,4 +39,22 @@ const create = async account => {
   return response.data
 }
 
-export default { create, getAll }
+const acceptRequest = async (friendId, cookieToken) => {
+  const config = {
+    headers: { Authorization: cookieToken },
+  }
+  
+  console.log(friendId, cookieToken)
+  const response = await axios.post(`${baseUrl}/accept/${friendId}`, {cookieToken})
+}
+
+const addFriend = async (id, userToken) => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  console.log(id)
+  const request = await axios.post(`${baseUrl}/${id}`, userToken, config)
+  return request.data
+}
+
+export default { create, getAll, addFriend, setToken, getUser, getFriend, acceptRequest }

@@ -1,0 +1,26 @@
+import React, { useEffect, useState } from 'react'
+import userService from '../services/users'
+import {
+  Container,
+  Text,
+  Heading
+} from '@chakra-ui/react'
+
+const People = () => {
+  const [users, setUsers] = useState([])
+
+  useEffect(() => {
+    userService
+      .getAll()
+      .then(initialUsers => {
+        setUsers(initialUsers)
+      })
+  }, [])
+  
+  return (
+    <Container>
+      <Heading>Find users and request new friends!</Heading>
+      
+    </Container>
+  )
+}

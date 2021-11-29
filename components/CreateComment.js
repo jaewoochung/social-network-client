@@ -8,6 +8,10 @@ import {
   Flex
 } from '@chakra-ui/react'
 
+import Cookie from 'universal-cookie'
+
+const cookies = new Cookie()
+
 const CreateComment = ({ post, addComment }) => {
   const [comment, setComment] = useState('')
   const toast = useToast()
@@ -21,17 +25,10 @@ const CreateComment = ({ post, addComment }) => {
 
     const fullComment = {
       comment: comment,
-      user: "Stephen"
+      user: cookies.get('username')
     }
     
-    addComment(comment, fullComment.user, {
-      title: post.title,
-      author: post.author,
-      content: post.content,
-      comments: post.comments.concat(fullComment),
-      likes: post.likes,
-      id: post.id
-    })
+    addComment(fullComment, post.id)
 
     setComment('')
 

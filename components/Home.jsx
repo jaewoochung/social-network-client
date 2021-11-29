@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import postService from '../services/posts'
+import userService from '../services/users'
 import {
   Box,
   Container
@@ -8,15 +9,31 @@ import {
 import SharePost from './SharePost'
 import Post from './Post'
 
+import Cookies from 'universal-cookie'
+
 const Home = () => {
   const [posts, setPosts] = useState([])
-
+  const [curUser, setCurUser] = useState([])
+  const [allowedUsers, setAllowedUsers] = useState([])
+  
+  const cookies = new Cookies()
+  
   useEffect(() => {
     postService
       .getAll()
       .then(initialPosts => {
-        setPosts(initialPosts)
+        setPosts(initialPosts.sort((a,b) => a.date-b.date))
       })
+  }, [])
+
+  useEffect(() => {
+    userService
+      .getUser(cookies.get('token'))
+      .then(initUser => setCurUser(initUser))
+  }, [])
+
+  useEffect(() => {
+    postService.setToken(cookies.get('token'))
   }, [])
 
   const createPost = (postObject) => {
@@ -36,14 +53,20 @@ const Home = () => {
   }
 
   return (
-    <Container maxW="75%">
-      <SharePost createPost={createPost} />
+    <Box>
+      <SharePost minW="55%" createPost={createPost} />
       {
-        posts.map(p =>
-          <Post key={p.id} post={p} refreshComments={refreshComments} />
-        )
+        posts.filter(post => post.user.friends.includes(curUser.id) || post.user.id === curUser.id)
+             .sort((a, b) => b - a)
+             .map(p =>
+               <Post
+                 key={p.id}
+                 post={p}
+                 refreshComments={refreshComments}
+               />
+             )
       }
-    </Container>
+    </Box>
   )
 }
 

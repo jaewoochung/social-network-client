@@ -1,5 +1,11 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/posts'
+const baseUrl = '/api/posts'
+
+let token = null
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
 
 const getAll = () => {
   const request = axios.get(baseUrl)
@@ -7,7 +13,11 @@ const getAll = () => {
 }
 
 const createPost = async (content) => {
-  const response = await axios.post(baseUrl, content)
+  const config = {
+    headers: { Authorization: token },
+  }
+  
+  const response = await axios.post(baseUrl, content, config)
   return response.data
 }
 
@@ -16,4 +26,9 @@ const createComment = async (id, content) => {
   return request.data
 }
 
-export default { getAll, createPost, createComment }
+const likePost = async (id) => {
+  const request = await axios.put(`${baseUrl}/like/${id}`)
+  return request.data
+}
+
+export default { getAll, createPost, createComment, setToken, likePost }

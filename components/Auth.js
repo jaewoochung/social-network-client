@@ -27,7 +27,7 @@ const Auth = (user) => {
   const [name, setName] = useState('')
   const [users, setUsers] = useState([])
 
-  const [isSignup, setIsSignup] = useState(true)
+  const [isSignup, setIsSignup] = useState(false)
   const toast = useToast()
 
   useEffect(() => {
@@ -66,18 +66,25 @@ const Auth = (user) => {
         const user = await loginService.login({
           username, password
         })
+
+        console.log(user)
         
         cookies.set('token', user.token)
         cookies.set('username', user.username)
         cookies.set('name', user.name)
+        postService.setToken(user.token)
 
         window.location.reload()
       } catch (exception) {
+        toast({
+          description: "Wrong Credentials - try again",
+          isClosable: true,
+          status: 'error'
+        })
         console.log(exception)
       }
 
     } else {
-      // verify passwords match
       if (password !== verifyPassword) {
         toast({
           description: "passwords do not match! - please retry",
@@ -86,12 +93,12 @@ const Auth = (user) => {
         })
       } else {
         const account = {
-          username: user,
+          username: username,
           name: name,
           password: password,
         }
         
-      userService.create(account)
+        userService.create(account)
         
         toast({
           description: "Succesfully created account",
@@ -100,22 +107,17 @@ const Auth = (user) => {
         
         setPassword('')
         setVerifyPassword('')
-        setUser('')
+        setUsername('')
         setName('')
+
+        // Toggle switchmode to let new user sign in
+        switchMode()
       }
     }
   }
-
-  const Test = ({ u }) => {
-    return (
-      <div>
-        {u.name}
-      </div>
-    )
-  }
   
   return (
-    <Container>
+    <Container maxW="65%">
       <Box>
         <Text
           fontWeight="bold"
@@ -129,20 +131,20 @@ const Auth = (user) => {
           {isSignup && (
             <div>
               <FormLabel>Full Name</FormLabel>
-              <Input bgColor="white" type="text" onChange={handleNameChange} />
+              <Input bgColor="white" type="text" onChange={handleNameChange} value={name} />
             </div>
           )}
           
           <FormLabel>Username</FormLabel>
-          <Input bgColor="white" type="text" onChange={handleUserChange} />
+          <Input bgColor="white" type="text" onChange={handleUserChange} value={username} />
           
           <FormLabel>Password</FormLabel>
-          <Input bgColor="white" type="password" onChange={handlePasswordChange} />
+          <Input bgColor="white" type="password" onChange={handlePasswordChange} value={password} />
 
           {isSignup && (
             <div>
               <FormLabel>Verify Password</FormLabel>
-              <Input bgColor="white" type="password" onChange={handleVerifyChange} />
+              <Input bgColor="white" type="password" onChange={handleVerifyChange} value={verifyPassword} />
             </div>            
           )}
           

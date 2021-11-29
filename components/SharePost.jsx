@@ -3,6 +3,7 @@ import postService from '../services/posts'
 import {
   Text,
   Container,
+  Avatar,
   Box,
   Flex,
   Textarea,
@@ -13,9 +14,13 @@ import {
 } from '@chakra-ui/react'
 import { MdOutlineFaceUnlock } from 'react-icons/md'
 
+import Cookies from 'universal-cookie'
+
 const SharePost = ({ createPost }) => {
   const [content, setContent] = useState('')
+  
   const toast = useToast( )
+  const cookies = new Cookies()
 
   const handleChange = (event) => {
     setContent(event.target.value)
@@ -23,9 +28,10 @@ const SharePost = ({ createPost }) => {
 
   const addPost = (event) => {
     event.preventDefault()
+
     createPost({
       content: content,
-      user: "Draco",
+      user_id: cookies.get('id'),
       likes: 0,
       comments: []
     })
@@ -37,10 +43,10 @@ const SharePost = ({ createPost }) => {
   }
   
   return (
-    <Container maxW="100%" mb={5}>
+    <Container maxW="75%" mb={5}>
       <Box bgColor="#eaeaeb" p={5} align="right">
         <Flex>
-          <Icon as={MdOutlineFaceUnlock} w={10} h={10} />
+          <Avatar name={cookies.get('username')} />
           <FormControl onSubmit={createPost}>
             <Textarea
               resize="none"

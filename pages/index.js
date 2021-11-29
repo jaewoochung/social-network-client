@@ -16,7 +16,7 @@ const Page = () => {
   const [user, setUser] = useState(null)
 
   if (!authToken) return (
-    <Container>
+    <Container maxW="100%">
       <Auth />
     </Container>
   )

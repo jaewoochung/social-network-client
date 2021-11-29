@@ -1,0 +1,14 @@
+import React from 'react'
+import {
+  Container,
+  Text,
+  Heading,
+  Avatar,
+  Button
+} from '@chakra-ui/react'
+
+const Friend = (user) => {
+
+}
+
+export default Friend

@@ -2,15 +2,16 @@ import React from 'react'
 import {
   Flex,
   Icon,
-  Text
+  Text,
+  Avatar
 } from '@chakra-ui/react'
 import { GoPerson } from 'react-icons/go'
 
 const Comment = ({ comment, user }) => {
   return (
     <Flex bgColor="#eaeaeb">
-      <Icon as={GoPerson} />
-      <Text fontWeight="bold">{user}:</Text>
+      <Avatar size="sm" name={user} />
+      <Text ml={2} fontWeight="bold">{user}:</Text>
       <Text pl={2}>{comment}</Text>
     </Flex>
   )
