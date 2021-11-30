@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = '/api/posts'
+const baseUrl = process.env.NODE_ENV === 'production' ? 'https://serene-oasis-52826.herokuapp.com/api/posts' : 'http://localhost:3001/api/posts'
 
 let token = null
 

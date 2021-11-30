@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server.js",
+    "start": "NODE_ENV='starting' next start",
     "dev": "NODE_ENV='development' node server.js",
     "server": "json-server -p3001 --watch db.json",
-    "build": "NODE_ENV=production next build",
+    "build": "next build",
     "prod": "next export"
   },
   "private": true,
